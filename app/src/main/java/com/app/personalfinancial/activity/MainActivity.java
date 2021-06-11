@@ -1,8 +1,10 @@
-package com.app.personalfinancial;
+package com.app.personalfinancial.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.app.personalfinancial.R;
 
 public class MainActivity extends AppCompatActivity {
 
