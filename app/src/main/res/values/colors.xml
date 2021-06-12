@@ -14,4 +14,6 @@
     <color name="green">#A433D118</color>
 
     <color name="light_gray">#f1f1f1</color>
+    <color name="white_trans">#A4FFFFFF</color>
+
 </resources>
