@@ -58,11 +58,13 @@
                         android:textColor="#4E4E4E" />
 
                     <TextView
+                        android:textDirection="ltr"
                         android:id="@+id/textView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
-                        android:text="-- تومان"
+                        android:layoutDirection="ltr"
+                        android:text="تومان --"
                         android:textColor="#737373" />
                 </RelativeLayout>
 

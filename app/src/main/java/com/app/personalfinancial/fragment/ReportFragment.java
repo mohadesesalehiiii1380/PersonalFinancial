@@ -62,7 +62,43 @@ public class ReportFragment extends Fragment {
     int cost = 0;
 
     private void getData() {
-
+        mBinding.progressBar.setVisibility(View.VISIBLE);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("income")
+                .get()
+                .addOnCompleteListener((Task<QuerySnapshot> task) -> {
+                    if (task.isSuccessful()) {
+                        List<Object> incomes = new ArrayList<>();
+                        income = 0;
+                        cost = 0;
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Income income1 = new Income(document.getId(), document.getData());
+                            income = income + Integer.parseInt(income1.amount);
+                            incomes.add(income1);
+                        }
+                        db.collection("cost")
+                                .get()
+                                .addOnCompleteListener(task1 -> {
+                                    if (task1.isSuccessful()) {
+                                        for (QueryDocumentSnapshot document : task1.getResult()) {
+                                            Cost cost1 = new Cost(document.getId(), document.getData());
+                                            cost = cost + Integer.parseInt(cost1.amount);
+                                            incomes.add(cost1);
+                                        }
+                                        mBinding.recyclerView.setAdapter(new TransactionAdapter(getContext(), incomes));
+                                        mBinding.textViewCosts.setText(cost + " تومان");
+                                        mBinding.textViewIncomes.setText(income + " تومان");
+                                        mBinding.textView.setText(" تومان" + (income - cost));
+                                    } else {
+                                        Log.w(TAG, "Error getting documents.", task1.getException());
+                                    }
+                                    mBinding.progressBar.setVisibility(View.GONE);
+                                });
+                    } else {
+                        Log.w(TAG, "Error getting documents.", task.getException());
+                        mBinding.progressBar.setVisibility(View.GONE);
+                    }
+                });
     }
 
     public class MyClickHandlers {

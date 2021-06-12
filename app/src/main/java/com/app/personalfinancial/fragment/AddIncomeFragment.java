@@ -55,6 +55,33 @@ public class AddIncomeFragment extends Fragment {
         }
 
         public void btnAdd(View view) {
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            // Create a new user with a first and last name
+            Map<String, Object> user = new HashMap<>();
+            user.put("title", mBinding.textInputEditTextTitle.getText().toString());
+            user.put("amount", mBinding.textInputEditTextAmount.getText().toString());
+            user.put("date", mBinding.textInputEditTextDate.getText().toString());
+            user.put("description", mBinding.textInputEditTextDescription.getText().toString());
+            user.put("category", mBinding.textInputEditTextCategory.getText().toString());
+            mBinding.progressBar.setVisibility(View.VISIBLE);
+            mBinding.btnLogin.setVisibility(View.GONE);
+            db.collection("income")
+                    .add(user)
+                    .addOnSuccessListener(documentReference -> {
+                        Toast.makeText(getContext(), "درآمد با موفقیت ثبت شد", Toast.LENGTH_LONG).show();
+                        mBinding.textInputEditTextTitle.setText("");
+                        mBinding.textInputEditTextAmount.setText("");
+                        mBinding.textInputEditTextDate.setText("");
+                        mBinding.textInputEditTextDescription.setText("");
+                        mBinding.textInputEditTextCategory.setText("");
+                        mBinding.progressBar.setVisibility(View.GONE);
+                        mBinding.btnLogin.setVisibility(View.VISIBLE);
+                    })
+                    .addOnFailureListener(e -> {
+                        Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                        mBinding.progressBar.setVisibility(View.GONE);
+                        mBinding.btnLogin.setVisibility(View.VISIBLE);
+                    });
         }
     }
 
