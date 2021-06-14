@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -16,13 +17,14 @@ import com.app.personalfinancial.fragment.AddCostFragment;
 import com.app.personalfinancial.fragment.AddIncomeFragment;
 import com.app.personalfinancial.fragment.ReportFragment;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    ActivityMainBinding mBinding;
+    private ActivityMainBinding mBinding;
     private MyClickHandlers handlers;
 
     @Override
@@ -67,7 +69,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
         public void btnLogout(View view) {
-
+            FirebaseAuth.getInstance().signOut();
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            finishAffinity();
         }
     }
 

@@ -2,6 +2,7 @@ package com.app.personalfinancial.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,6 +57,14 @@ public class AddCostFragment extends Fragment {
         }
 
         public void btnAdd(View view) {
+            if (TextUtils.isEmpty(mBinding.textInputEditTextTitle.getText()) ||
+                    TextUtils.isEmpty(mBinding.textInputEditTextAmount.getText()) ||
+                    TextUtils.isEmpty(mBinding.textInputEditTextDate.getText()) ||
+                    android.text.TextUtils.isEmpty(mBinding.textInputEditTextDescription.getText()) ||
+                    android.text.TextUtils.isEmpty(mBinding.textInputEditTextCategory.getText())) {
+                Toast.makeText(getContext(), "لطفا همه اطلاعات خواسته شده را وارد کنید", Toast.LENGTH_LONG).show();
+                return;
+            }
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             // Create a new user with a first and last name
             Map<String, Object> user = new HashMap<>();

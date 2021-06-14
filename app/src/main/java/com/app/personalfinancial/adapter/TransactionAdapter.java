@@ -9,10 +9,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.personalfinancial.R;
+import com.app.personalfinancial.activity.ShowCostDetailsActivity;
+import com.app.personalfinancial.activity.ShowIncomeDetailsActivity;
 import com.app.personalfinancial.databinding.ListitemReportBinding;
 import com.app.personalfinancial.model.Cost;
 import com.app.personalfinancial.model.Income;
-import com.google.gson.Gson;
+
 
 import org.jetbrains.annotations.NotNull;
 
@@ -45,9 +47,9 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
             holder.binding.textViewCategory.setText(income.category);
 
             holder.binding.getRoot().setOnClickListener(v -> {
-//                Intent intent = new Intent(context, IncomeDetailsActivity.class);
-//                intent.putExtra("income", new Gson().toJson(income));
-//                context.startActivity(intent);
+                Intent intent = new Intent(context, ShowIncomeDetailsActivity.class);
+                intent.putExtra("INCOME_ID", income.id);
+                context.startActivity(intent);
             });
 
         }
@@ -58,8 +60,13 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
             holder.binding.textViewAmount.setText(cost.amount + " تومان");
             holder.binding.textViewTitle.setText(cost.title);
             holder.binding.textViewCategory.setText(cost.category);
-        }
 
+            holder.binding.getRoot().setOnClickListener(v -> {
+                Intent intent = new Intent(context, ShowCostDetailsActivity.class);
+                intent.putExtra("COST_ID", cost.id);
+                context.startActivity(intent);
+            });
+        }
 
     }
 
